@@ -1,11 +1,18 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Slot } from '../entities/slot.entity';
 import { CalendarQueryDto } from '../dtos/calendar-query.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@EntityRepository(Slot)
-export class SlotRepository extends Repository<Slot> {
+@Injectable()
+export class SlotRepository {
+  constructor(
+    @InjectRepository(Slot)
+    private readonly repository: Repository<Slot>,
+  ) {}
   async findAvailableSlots(query: CalendarQueryDto) {
-    const queryBuilder = this.createQueryBuilder('slot')
+    const queryBuilder = this.repository
+      .createQueryBuilder('slot')
       .innerJoinAndSelect('slot.salesManager', 'salesManager')
       .where('DATE(slot.start_date) = DATE(:date)', { date: query.date })
       .andWhere('slot.booked = :booked', { booked: false })

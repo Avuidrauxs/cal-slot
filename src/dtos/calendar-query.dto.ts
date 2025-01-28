@@ -1,7 +1,13 @@
-import { IsDate, IsArray, IsString, ArrayNotEmpty } from 'class-validator';
+import {
+  IsDate,
+  IsArray,
+  IsString,
+  ArrayNotEmpty,
+  IsDateString,
+} from 'class-validator';
 
 export class CalendarQueryDto {
-  @IsDate()
+  @IsDateString()
   date: Date;
 
   @IsArray()
