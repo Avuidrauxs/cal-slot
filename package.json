@@ -14,11 +14,12 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
+    "challenge-test": "cd test-app && npm run test",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:run": "npx typeorm migration:run"
+    "init-db": "docker build -t enpal-coding-challenge-db tools/. && docker run --name enpal-coding-challenge-db -p 5432:5432 -d enpal-coding-challenge-db"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
